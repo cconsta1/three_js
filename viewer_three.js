@@ -21,6 +21,8 @@
 
 (function ($, Configuration) {
 
+    alert("HI");
+
     let useTab = Configuration.tab;
     let referenceUrl = Configuration.url;
     let previewer = Configuration.previewer;

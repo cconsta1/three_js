@@ -80,9 +80,13 @@
 
     // scripts is an array containing three library files which are found under
     // the js folder. We use various functions from those library files
-    // to laod our model.
+    // to load our model.
 
-    let scripts =["three.min.js", "GLTFLloader.js", "OrbitControls.js"];
+    // These libraries can be found online and eventually we should load
+    // them from there
+
+    let scripts =["three.min.new.js", "inflate.min.js",
+        "GLTFLloader.new.js", "OrbitControls.new.js", "FBXLoader.new.js"];
 
     // We use the for loop to load the files into our program
 
@@ -128,7 +132,7 @@ let previewerHeight = 480;
 
 function init() {
     // Here is where I tell the program to create a window inside clowder and
-    // show everything there
+    // show everything within that window.
 
     container = document.getElementById(Configuration.tab.replace("#",""));
 
@@ -146,37 +150,29 @@ function init() {
     camera = new THREE.PerspectiveCamera( 70, previewerWidth/previewerHeight, 1, 1000 );
     camera.position.z = 40;
 
-    // Here is where we load the texture. The texture is like having a naked vase, and put something
-    // to "dress" it if that makes sense.
-
-    //const texture = new THREE.TextureLoader().load('/assets/javascripts/previewers/three_js/models/little_witch_academia/textures/BROWN_baseColor.png' );
-
-    //const texture = new THREE.TextureLoader().setPath('/assets/javascripts/previewers/three_js/models/little_witch_academia/');
-    // const text1 = texture.load('OCZKI_baseColor.png');
-    // const text2 = texture.load('Blue_dress.003_baseColor.png');
-    // const text3 = texture.load('material_baseColor.png');
-    // const text4 = texture.load('Wosy2_baseColor.png');
-    // const text5 = texture.load('material_2_baseColor.png');
-    // const text6 = texture.load('BROWN_baseColor.png');
-
-
+    // Here is where we load the texture.
+    
     // Here is where we import the 3D model.
 
     // For now we save it in the clowder installation,
     // inside the folder public/javascripts/previewers/three_js/models
 
-    let loader = new THREE.GLTFLoader();
-    let filepath = "/assets/javascripts/previewers/three_js/models/scene.gltf";
+    //let loader = new THREE.GLTFLoader();
+    //let filepath = "/assets/javascripts/previewers/three_js/models/airplane/scene.gltf";
+    let loader = new THREE.FBXLoader();
+    let filepath = "/assets/javascripts/previewers/three_js/models/free-1972-datsun-240k-gt/source/datsun240k.fbx";
 
     // This is the loader function. I don't understand all the details
 
-    loader.load(filepath, function (gltf) {
+    loader.load(filepath, function (obj) {
 
-        let model = gltf.scene;
+        // For the GLTF loader you need to add obj.scene to the scene
 
-        //model.children[0].scale.set(0.1, 0.1, 0.1);
+        //scene.add(obj.scene);
 
-        scene.add(model);
+        // For the FBX loader you need to add the obj itself.
+
+        scene.add(obj);
 
         let light = new THREE.AmbientLight( 0xffffff );
         scene.add( light );

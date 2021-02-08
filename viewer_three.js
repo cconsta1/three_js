@@ -61,9 +61,11 @@
     let referenceUrl = Configuration.url;
     let previewer = Configuration.previewer;
 
-    let fileName = $('#file-name-title').text().trim();
-    let fileNameExtension = fileName.substr(fileName.length - 3);
-    let fileType;
+    // The following variables are not needed for now
+
+    //let fileName = $('#file-name-title').text().trim();
+    //let fileNameExtension = fileName.substr(fileName.length - 3);
+    //let fileType;
 
     // This is a trick I use to make the console.log function to work
 
@@ -78,7 +80,7 @@
     // to load our model.
 
     // These libraries can be found online and eventually we should load
-    // them from there
+    // them from a server I think.
 
     let scripts =[ "three.min.js",  "stats.min.js", "OrbitControls.js", "FBXLoader.js", "fflate.min.js" ];
 
@@ -95,9 +97,10 @@
     // to run your program
 
      $(document).ready(function(){
-         init();
+         init(referenceUrl);
          animate();
      });
+
 
 
 }(jQuery, Configuration));
@@ -111,7 +114,7 @@ let mixer;
 let previewerWidth = 640;
 let previewerHeight = 480;
 
-function init() {
+function init(urlAddress) {
 
     const container = document.getElementById(Configuration.tab.replace("#",""));
 
@@ -148,9 +151,11 @@ function init() {
     grid.material.transparent = true;
     scene.add( grid );
 
-    // model
     const loader = new THREE.FBXLoader();
-    loader.load( '/assets/javascripts/previewers/three_js/models/samba/Samba_Dancing.fbx', function ( object ) {
+
+    loader.setPath(urlAddress);
+
+    loader.load( '', function ( object ) {
 
         mixer = new THREE.AnimationMixer( object );
 
